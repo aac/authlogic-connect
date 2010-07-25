@@ -26,7 +26,8 @@ class AccessToken < ActiveRecord::Base
   end
 
   def version_path(path)
-    path.insert(0, "/#{self.class.api_version}") unless self.class.api_version.nil?
+    return path.insert(0, "/#{self.class.api_version}") unless self.class.api_version.nil?
+    path
   end
   
   class << self
