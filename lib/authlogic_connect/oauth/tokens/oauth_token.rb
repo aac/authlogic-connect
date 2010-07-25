@@ -21,23 +21,23 @@ class OauthToken < AccessToken
   end
   
   def get(path, headers = {})
-    client.get(path, headers)
+    client.get(version_path(path), headers)
   end
   
   def post(path, body = "", headers = {})
-    client.post(path, body, headers)
+    client.post(version_path(path), body, headers)
   end
   
   def head(path, headers = {})
-    client.head(path, headers)
+    client.head(version_path(path), headers)
   end
   
   def put(path, body = "", headers = {})
-    client.put(path, body, headers)
+    client.put(version_path(path), body, headers)
   end
   
   def delete(path, headers = {})
-    client.delete(path, headers)
+    client.delete(version_path(path), headers)
   end
   
   class << self

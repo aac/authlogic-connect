@@ -24,6 +24,10 @@ class AccessToken < ActiveRecord::Base
   def get(path)
     
   end
+
+  def version_path(path)
+    path.insert(0, "/#{self.class.api_version}") unless self.class.api_version.nil?
+  end
   
   class << self
     def service_name
@@ -48,7 +52,7 @@ class AccessToken < ActiveRecord::Base
     end
     
     def api_version(value = nil)
-      config[:api]
+      config[:api_versions].try(:fetch, value || config[:api_version], nil)
     end
     
     protected
