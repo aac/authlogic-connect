@@ -1,7 +1,14 @@
 class FoursquareToken < OauthToken
-  
   key do |access_token|
-    body = JSON.parse(access_token.get("/user.json").body)
+    if access_token.consumer.http and access_token.consumer.http.address == "foursquare.com"    
+      # reset the consumer
+      access_token.consumer=access_token.consumer.class.new(credentials[:key], credentials[:secret], config)
+    end
+
+    user_path = "/user.json"
+    user_path = user_path.insert(0, "/#{api_version}") unless api_version.nil?
+
+    body = JSON.parse(access_token.get(user_path).body)
     user_id = body['user']['id'].to_s
   end
   
